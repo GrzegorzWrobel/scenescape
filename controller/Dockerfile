@@ -38,10 +38,9 @@ ENV PATH="${BUILD_ENV_DIR}/bin:${PATH}"
 ENV WHEEL_DIR=/tmp/wheelhouse
 
 # Install 3rd party python dependencies
-COPY controller/requirements-buildtime.txt controller/requirements-runtime.txt /tmp/
+COPY controller/requirements-buildtime.txt /tmp/
 RUN : \
-    && pip3 download -r /tmp/requirements-buildtime.txt -d ${WHEEL_DIR} \
-    && pip3 install --upgrade --no-index --find-links=${WHEEL_DIR} -r /tmp/requirements-buildtime.txt \
+    && pip3 install --upgrade -r /tmp/requirements-buildtime.txt \
     && rm -rf /tmp/requirements-buildtime.txt
 
 # Build robot vision package
@@ -111,9 +110,6 @@ RUN : \
     && ${RUNTIME_ENV_DIR}/bin/pip3 install --no-cache-dir wheel
 ENV PATH="${RUNTIME_ENV_DIR}/bin:${PATH}"
 
-# copy wheels from the builder stage
-COPY --chown=$WSUSER:$WSUSER --from=scenescape-controller-builder ${WHEEL_DIR} ${WHEEL_DIR}
-
 # copy installed scenescape packages from the previous stages
 COPY --chown=$WSUSER:$WSUSER --from=scenescape-common-base /usr/local/lib/python${PYTHON_VERSION}/dist-packages/fast_geometry ${RUNTIME_ENV_DIR}/lib/python${PYTHON_VERSION}/site-packages/fast_geometry
 COPY --chown=$WSUSER:$WSUSER --from=scenescape-common-base /usr/local/lib/python${PYTHON_VERSION}/dist-packages/scene_common ${RUNTIME_ENV_DIR}/lib/python${PYTHON_VERSION}/site-packages/scene_common
@@ -123,7 +119,7 @@ COPY --chown=$WSUSER:$WSUSER --from=scenescape-controller-builder ${BUILD_ENV_DI
 # install only required runtime dependencies
 COPY controller/requirements-runtime.txt /tmp
 RUN : \
-    && pip3 install --upgrade --find-links=${WHEEL_DIR} -r /tmp/requirements-runtime.txt \
+    && pip3 install --upgrade -r /tmp/requirements-runtime.txt \
     && rm -rf /tmp/requirements-runtime.txt \
     && rm -rf ${WHEEL_DIR}
 
