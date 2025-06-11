@@ -155,7 +155,6 @@ release-tests: \
 
 broken-tests: \
   3d-camera-control-panel \
-  acl-check \
   april-tag-setup \
   auto-calibration \
   metric-tests \
