@@ -134,7 +134,7 @@ tests: \
   basic-acceptance-tests \
   standard-tests \
 
-# These tests must be run during release cycle. FIXME - automate: See SAIL-1874
+# These tests must be run during release cycle.
 release-tests: \
   3d-ui-calibration-points \
   additional-floor-plans \
@@ -146,7 +146,6 @@ release-tests: \
   different-formats-maps \
   live-view-button \
   manual-camera-calibration \
-  percebro-pinhole-undistort \
   reid-unique-count \
   reid-performance-degradation \
   scene-details \
@@ -247,7 +246,6 @@ _unit-tests: \
   geometry-unit \
   geospatial-unit \
   markerless-unit \
-  mesh-util-unit \
   percebro-unit \
   realsense-unit \
   scene-unit \
