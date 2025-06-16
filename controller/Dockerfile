@@ -79,7 +79,7 @@ RUN : \
         netbase \
         python3-pip \
     && rm -rf /usr/lib/x86_64-linux-gnu/libLLVM-15.so.1 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN : \
     && useradd -r -m -s /bin/bash $WSUSER \
@@ -104,7 +104,7 @@ RUN : \
 
 COPY --chown=$WSUSER:$WSUSER ./controller/src/schema/metadata.schema.json $SCENESCAPE_HOME/schema/metadata.schema.json
 COPY --chown=$WSUSER:$WSUSER ./controller/config/tracker-config.json $SCENESCAPE_HOME/tracker-config.json
-COPY --chown=$WSUSER:$WSUSER --from=scenescape-common-base /tmp/utils/waitforbroker $SCENESCAPE_HOME/utils/waitforbroker
+COPY --chown=$WSUSER:$WSUSER --from=scenescape-common-base /tmp/tools/waitforbroker $SCENESCAPE_HOME/tools/waitforbroker
 COPY --chown=$WSUSER:$WSUSER ./controller/src/controller-cmd $SCENESCAPE_HOME/controller-cmd
 COPY --chown=$WSUSER:$WSUSER ./controller/src/controller-init /usr/local/bin/
 
